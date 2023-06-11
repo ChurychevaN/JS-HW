@@ -9,39 +9,27 @@ const userNames = [
 
 // тут ваш код ...
 
-/////////////////////////////////
-const newArr = [];
+let initials = userNames
+  .map((userName) =>
+    userName
+      .split(" ")
+      .map((arr) => arr[0])
+      .join(".")
+  )
+  .sort()
+  .map((initial) => `${initial}.`);
 
-userNames.forEach((str) => {
-  const res = str.split(" ");
-  const resArr = [];
+console.log(initials); // [ "Г.П.А.", "П.О.І.", "Р.А.О."]
 
-  res.forEach((str) => {
-    const index = str[0];
-    resArr.push(index);
-  });
-  const initial = resArr.join(".");
-  newArr.push(initial + ".");
-});
-const initials = newArr.sort();
-console.log(initials);
-
-// console.log(initials); // [ "Г.П.А.", "П.О.І.", "Р.А.О."]
-
-/////////////////////////////////////////////////////////////////////
 // Задача на розворот числа:
 
 const currentMaxValue = 4589;
 
 // // тут ваш код...
-let reverseMaxValue = ("" + currentMaxValue).split("").reverse().join("");
+const reverseMaxValue = +("" + currentMaxValue).split("").reverse().join("");
 
-console.log(reverseMaxValue);
+console.log(typeof reverseMaxValue, reverseMaxValue); // 9854
 
-// console.log(reverseMaxValue); // 9854
-// console.log(reverseMaxValue); // 'number'
-
-/////////////////////////////////////////////////////////
 // Задача на знаходження добутку масиву чисел з невідомою глибиною вкладеності:
 
 const resultsArray = [1, 2, [3, [4]]];
@@ -53,8 +41,6 @@ console.log(flatMatrix);
 
 const productOfArray = flatMatrix.reduce((prev, current) => {
   return prev * current;
-}, resultsArray[0]);
+});
 
-console.log(productOfArray);
-
-// console.log(productOfArray); // 24
+console.log(productOfArray); // 24
