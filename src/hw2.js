@@ -23,31 +23,24 @@ const durationBetweenDates = (start, end, dimensionality) => {
   const startDate = new Date(start);
   const endDate = new Date(end);
 
-  const ms = endDate - startDate;
-  const diffDate = startDate - endDate;
+  const ms = Math.abs(endDate - startDate);
 
   switch (dimensionality) {
     case DIMENSIONALITY.DAYS:
-      console.log(
-        Math.ceil(diffDate / (1000 * 3600 * 24)),
-        DIMENSIONALITY.DAYS
-      );
-      break;
+      return `${ms / (1000 * 3600 * 24)} ${DIMENSIONALITY.DAYS}`;
     case DIMENSIONALITY.HOURS:
-      console.log(Math.floor(ms / 3600000), DIMENSIONALITY.HOURS);
-      break;
+      return `${ms / 3600000} ${DIMENSIONALITY.HOURS}`;
     case DIMENSIONALITY.MINUTES:
-      console.log(Math.floor(ms / 60000), DIMENSIONALITY.MINUTES);
-      break;
+      return `${ms / 60000} ${DIMENSIONALITY.MINUTES}`;
     case DIMENSIONALITY.SECONDS:
-      console.log(Math.floor(ms / 1000), DIMENSIONALITY.SECONDS);
-
-      break;
+      return `${ms / 1000} ${DIMENSIONALITY.SECONDS}`;
+    default:
+      return "????";
   }
 };
 
-durationBetweenDates("02 Aug 1985", "03 Aug 1985", DIMENSIONALITY.SECONDS);
-durationBetweenDates("31 Jan 2022", "03 Feb 2021", DIMENSIONALITY.DAYS);
+console.log(durationBetweenDates("02 Aug 1985", "03 Aug 1985", "seconds"));
+console.log(durationBetweenDates("31 Jan 2022", "03 Feb 2021", "days"));
 
 // 2
 // Задача про перетворення об'єкту
@@ -57,28 +50,23 @@ durationBetweenDates("31 Jan 2022", "03 Feb 2021", DIMENSIONALITY.DAYS);
 // Приклад:
 // // приклад об'єкту
 const priceData = {
-Apples: '23.4',
-BANANAS: '48',
-oRAngGEs: '48.7584', };
+  Apples: "23.4",
+  BANANAS: "48",
+  oRAngGEs: "48.7584",
+};
 
-function optimizer(data) { 
-    // тут ваш код
-    let optimizer = {};
+function optimizer(data) {
+  // тут ваш код
+  let optimizer = {};
 
-    for (let key in data) {
-        if(data.hasOwnProperty(key)) {
-            let lowerCaseKey = key.toLowerCase();
-            let roundedPrice = parseFloat(data[key]).toFixed(2);
-            optimizer[lowerCaseKey] = roundedPrice;
-        }
-    }
-    return optimizer;
- 
+  for (let key in data) {
+    optimizer[key.toLowerCase()] = parseFloat(data[key]).toFixed(2);
+  }
+  return optimizer;
 }
-    
+
 let updatedPriceData = optimizer(priceData);
 console.log(updatedPriceData); // {apples: '23.40', bananas: '48.00', oranges: '48.76'}
-
 
 //3
 // Задача про рекурсію та ітерацію
@@ -95,10 +83,8 @@ function recursiveOddSumTo(number) {
   if (number % 2 > 0) {
     return number + recursiveOddSumTo(number - 1);
   }
-  if (number % 2 === 0) {
-    return 0 + recursiveOddSumTo(number - 1);
-  }
-};
+  return recursiveOddSumTo(number - 1);
+}
 
 console.log(recursiveOddSumTo(1)); // 1
 console.log(recursiveOddSumTo(10)); // 25
@@ -107,13 +93,12 @@ console.log(recursiveOddSumTo(10)); // 25
 
 // Приклад:
 function iterativeOddSumTo(number) {
-    let sum = 0;
-     // тут ваш код
-    for(let i = 1; i <= number; i++) {
-        if( i % 2 !== 0)
-        sum += i;
-    }
-    return sum;
-    };
-console.log(iterativeOddSumTo(1)) // 1
-console.log(iterativeOddSumTo(10)) // 25
+  let sum = 0;
+  // тут ваш код
+  for (let i = 1; i <= number; i++) {
+    if (i % 2 !== 0) sum += i;
+  }
+  return sum;
+}
+console.log(iterativeOddSumTo(1)); // 1
+console.log(iterativeOddSumTo(10)); // 25
