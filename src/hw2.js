@@ -20,8 +20,8 @@ const DIMENSIONALITY = {
 };
 
 const durationBetweenDates = (
-  startDate,
-  endDate,
+  startDate = "25 May 2023",
+  endDate = "20 Jun 2023",
   dimensionality = "minutes"
 ) => {
   const ms = Math.abs(new Date(endDate) - new Date(startDate));
@@ -40,7 +40,7 @@ const durationBetweenDates = (
 
 console.log(durationBetweenDates("02 Aug 1985", "03 Aug 1985", "seconds"));
 console.log(durationBetweenDates("31 Jan 2022", "03 Feb 2021", "days"));
-console.log(durationBetweenDates("Hello:)"));
+console.log(durationBetweenDates());
 
 // 2
 // Задача про перетворення об'єкту
@@ -55,17 +55,17 @@ const priceData = {
   oRAngGEs: "48.7584",
 };
 
-function optimizedObj(data) {
+function optimizer(data) {
   // тут ваш код
-  let optimizer = {};
+  let optimizedObj = {};
 
   for (let key in data) {
-    optimizer[key.toLowerCase()] = parseFloat(data[key]).toFixed(2);
+    optimizedObj[key.toLowerCase()] = parseFloat(data[key]).toFixed(2);
   }
-  return optimizer;
+  return optimizedObj;
 }
 
-let updatedPriceData = optimizedObj(priceData);
+let updatedPriceData = optimizer(priceData);
 console.log(updatedPriceData); // {apples: '23.40', bananas: '48.00', oranges: '48.76'}
 
 //3
