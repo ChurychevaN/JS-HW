@@ -66,14 +66,12 @@ console.log(movies.sort(byProperty("movieName", ">"))); // виведе маси
 function byProperty(property, direction) {
   // тут ваш код
   return function (a, b) {
-    if ((direction === ">", a[property] > b[property])) {
-      return 1;
+    if (direction === ">") {
+     return a[property] > b[property] ? 1 : -1;
+    } else{
+      return a[property] < b[property] ? 1 : -1;
     }
-    if ((direction === "<", a[property] < b[property])) {
-      return -1;
-    }
-    return 0;
-  };
+  }
 }
 
 // 4. Напишіть функцію detonatorTimer(delay)
@@ -101,20 +99,20 @@ function detonatorTimer(delay) {
 }
 
 
-// function detonatorTimer(delay) {
+function detonatorTimer(delay) {
 
-//   function countdown (time) {
-//     if(time > 0) {
-//       console.log(time);
-//       setTimeout(() =>
-//         countdown(time -1), 1000
-//       );
-//     } else{
-//       console.log('BOOM!')
-//     }
-//   }
-//   countdown(delay);
-// }
+  function countdown (time) {
+    if(time > 0) {
+      console.log(time);
+      setTimeout(() =>
+        countdown(time -1), 1000
+      );
+    } else{
+      console.log('BOOM!')
+    }
+  }
+  countdown(delay);
+}
 
 // 5. Напишіть об'єкт в якому опишіть свої довільні властивості та довільні методи (2-3 штуки) що ці властивості виводять.
 // Можете описати скільки хочете властивостей і не менше 2 методів.
