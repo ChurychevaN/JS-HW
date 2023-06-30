@@ -1,2 +1,2 @@
-# 1-project
-A JavaScript project
+# hw
+A JavaScript hw
