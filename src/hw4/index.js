@@ -12,22 +12,72 @@
 const button = document.querySelector(".button");
 const statusMessage = document.querySelector(".statusMessage");
 
+function turnOn() {
+  button.textContent = "Turn off";
+  document.body.classList.remove("dark-background");
+}
+
+function turnOff() {
+  button.textContent = "Turn on";
+  document.body.classList.add("dark-background");
+}
+
+function loadData() {
+  const isTurnedOn = localStorage.getItem("isTurnedOn");
+  const lastChange = localStorage.getItem("lastChange");
+
+  if (isTurnedOn === "true") {
+    turnOn();
+  } else {
+    turnOff();
+  }
+
+  if (lastChange) {
+    statusMessage.textContent = isTurnedOn === "true"
+      ? `Last turn off: ${lastChange}`
+      : `Last turn on: ${lastChange}`;
+  }
+}
+
 function toggleButton() {
   const isTurnedOn = button.getAttribute("data-isTurnedOn") === "true";
 
   button.setAttribute("data-isTurnedOn", isTurnedOn ? "false" : "true");
-  button.textContent = isTurnedOn ? "Turn off" : "Turn on";
-  document.body.classList.toggle("dark-background", !isTurnedOn);
-  statusMessage.textContent = isTurnedOn
-    ? `Last turn off: ${getCurrentDateTime()}`
-    : `Last turn on: ${getCurrentDateTime()}`;
-
   localStorage.setItem("isTurnedOn", button.getAttribute("data-isTurnedOn"));
-  localStorage.setItem("lastChange", getCurrentDateTime());
+
+  if (isTurnedOn) {
+    turnOff();
+    statusMessage.textContent = `Last turn off: ${getCurrentDateTime()}`;
+    localStorage.setItem("lastChange", getCurrentDateTime());
+  } else {
+    turnOn();
+    statusMessage.textContent = `Last turn on: ${getCurrentDateTime()}`;
+    localStorage.setItem("lastChange", getCurrentDateTime());
+  }
 }
 
 function getCurrentDateTime() {
-  return new Date().toLocaleString();
+  const currentDate = new Date(); 
+  
+  return (
+    [
+      addZeroBeginningNum(currentDate.getMonth() + 1),
+      addZeroBeginningNum(currentDate.getDate()),
+      currentDate.getFullYear(),
+    ].join('/') +
+    ' ' +
+    [
+      addZeroBeginningNum(currentDate.getHours()),
+      addZeroBeginningNum(currentDate.getMinutes()),
+      addZeroBeginningNum(currentDate.getSeconds()),
+    ].join(':')
+  );
+}
+// Функція додає нуль на початку, 
+// якщо місяць, день, години, хвилини чи секунди містять лише одну цифру (менше 10).
+function addZeroBeginningNum(num) {
+  return num.toString().padStart(2, '0');
 }
 
 button.addEventListener("click", toggleButton);
+loadData();
