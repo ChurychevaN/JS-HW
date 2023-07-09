@@ -11,63 +11,59 @@
 
 const button = document.querySelector(".button");
 const statusMessage = document.querySelector(".statusMessage");
+const theme = localStorage.getItem("theme");
+const lastChange = localStorage.getItem("lastChange");
+
+console.log(theme);
+theme === "dark" ? darkTheme() : lightTheme();
 
 function getItemFromLocalStorage() {
-  const isTurnedOn = localStorage.getItem("isTurnedOn");
-  const lastChange = localStorage.getItem("lastChange");
-
-  if (isTurnedOn === "true") {
-    turnOn();
-  } else {
-    turnOff();
-  }
-
   if (lastChange) {
-    statusMessage.textContent = isTurnedOn === "true"
-      ? `Last turn off: ${lastChange}`
-      : `Last turn on: ${lastChange}`;
+    statusMessage.textContent =
+      theme === "light"
+        ? `Last turn off: ${lastChange}`
+        : `Last turn on: ${lastChange}`;
   }
-
 }
 
-function turnOn() {
+function lightTheme() {
   button.textContent = "Turn off";
   document.body.classList.remove("dark-background");
 }
 
-function turnOff() {
+function darkTheme() {
   button.textContent = "Turn on";
   document.body.classList.add("dark-background");
 }
 
 function toggleButton() {
-  const isTurnedOn = button.getAttribute("data-isTurnedOn") === "true";
+  const isThemeLight = button.getAttribute("data-theme") === "light";
 
-  button.setAttribute("data-isTurnedOn", isTurnedOn ? "false" : "true");
-  localStorage.setItem("isTurnedOn", button.getAttribute("data-isTurnedOn"));
+  button.setAttribute("data-theme", isThemeLight ? "dark" : "light");
+  localStorage.setItem("theme", button.getAttribute("data-theme"));
 
-  if (isTurnedOn) {
-    turnOff();
-    statusMessage.textContent = `Last turn off: ${getCurrentDateTime()}`;
+  if (isThemeLight) {
+    darkTheme();
+    statusMessage.textContent = `Last turn on: ${getCurrentDateTime()}`;
     localStorage.setItem("lastChange", getCurrentDateTime());
   } else {
-    turnOn();
-    statusMessage.textContent = `Last turn on: ${getCurrentDateTime()}`;
+    lightTheme();
+    statusMessage.textContent = `Last turn off: ${getCurrentDateTime()}`;
     localStorage.setItem("lastChange", getCurrentDateTime());
   }
 }
 
 function getCurrentDateTime() {
-  const currentDate = new Date(); 
-  
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  const month = String(currentDate.getMonth()).padStart(2, '0');
-  const year = String(currentDate.getFullYear());
-  const hours = String(currentDate.getHours()).padStart(2, '0');
-  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+  const currentDate = new Date();
 
-  return `${day}-${month}-${year}  ${hours}:${minutes}:${seconds}`
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const month = String(currentDate.getMonth()).padStart(2, "0");
+  const year = String(currentDate.getFullYear());
+  const hours = String(currentDate.getHours()).padStart(2, "0");
+  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+  const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+  return `${day}-${month}-${year}  ${hours}:${minutes}:${seconds}`;
 }
 
 button.addEventListener("click", toggleButton);

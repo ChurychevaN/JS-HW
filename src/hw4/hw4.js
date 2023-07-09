@@ -9,7 +9,7 @@
 // Приклад:
 //  let spanWithClass = document.querySelector('.hatredLevelCounter');
 
-let h2Class = document.getElementById('headerTwo');
-let firstSection = document.getElementsByClassName('firstSection');
-let text5 = document.querySelector('.text5');
-let divBlock = document.querySelector('.hatredLevelBlock');
+const h2Class = document.getElementById('headerTwo');
+const firstSection = document.getElementsByClassName('firstSection');
+const text5 = document.body.lastElementChild.lastElementChild.previousSibling;
+const divBlock = document.querySelector('.hatredLevelBlock');
