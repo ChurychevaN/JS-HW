@@ -1,0 +1,97 @@
+.container {
+    /* Стилі для основного контейнера */
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.create-task-block {
+    /* Стилі для блоку створення завдань */
+    margin-bottom: 20px;
+}
+
+.create-task-form {
+    /* Стилі для форми створення завдань */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-title {
+    /* Стилі для заголовку завдання */
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.task-input {
+    /* Стилі для поля вводу завдання */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    /* Стилі для кнопок */
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-task-block {
+    /* Стилі для блоку фільтру завдань */
+    margin-bottom: 20px;
+}
+
+.filter-input {
+    /* Стилі для поля вводу фільтру завдань */
+    width: 96%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.collection {
+    /* Стилі для списку завдань */
+    list-style: none;
+    padding: 0;
+}
+
+.collection-item {
+    /* Стилі для окремих елементів списку завдань */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.delete-item {
+    /* Стилі для елементу видалення завдання */
+    margin-left: 10px;
+    color: #e62828;
+    cursor: pointer;
+}
+
+.edit-item {
+    /* Стилі для елементу редагування завдання */
+    margin-left: 10px;
+    color: #0000ff;
+    cursor: pointer;
+}
+
+.clear-tasks {
+    /* Стилі для кнопки видалення всіх завдань */
+    padding: 10px 20px;
+    background-color: #e62828;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
