@@ -60,7 +60,7 @@ function setTasksToLocalStorage(tasks) {
  * Створюємо окрему задачу
  * @param {String} task - окрема задача
  */
-function createSingleTaskElement(task, index) {
+function createSingleTaskElement(task, id) {
   // Створюємо HTML елемент li
   const li = document.createElement("li");
   // Додаємо елементу клас
@@ -83,7 +83,7 @@ function createSingleTaskElement(task, index) {
   // Додаємо елемент в елемент списку
   li.appendChild(deleteElement);
   li.appendChild(editElement);
-  li.dataset.taskIndex = index;
+  li.dataset.taskIndex = id;
   // Додаємо елемент списку в список задач
   taskList.appendChild(li);
 }
@@ -95,9 +95,12 @@ function renderTasks() {
   // Отримуємо задачі з localStorage або пустий масив
   const tasks = getTasksFromLocalStorage();
 
+  // Очищаємо список задач на сторінці перед оновленням
+  taskList.innerHTML = "";
+
   // Проходимо по масиву задач і додаємо кожну задачу в список, в DOM
   tasks.forEach((task, index) => {
-    createSingleTaskElement(task, index);
+    createSingleTaskElement(task.task, index);
   });
 }
 
@@ -122,34 +125,37 @@ function handleTaskAction(event) {
   }
 }
 
-//edit текст окремої задачі
+// edit текст окремої задачі
 function editTask(taskItem, taskIndex) {
+  // Отримуємо поточний текст задачі
+  const currentTaskText = taskItem.firstChild.textContent;
+
   // Створюємо новий елемент для оновленого тексту задачі
-  const newTaskText = prompt(
-    "Введіть новий текст задачі",
-    taskItem.textContent.trim()
-  );
+  const newTaskText = prompt("Введіть новий текст задачі", currentTaskText);
 
   if (newTaskText !== null && newTaskText.trim() !== "") {
     // Отримуємо посилання на іконку видалення
     const deleteItem = taskItem.querySelector(".delete-item");
     // Отримуємо посилання на іконку редагування
     const editItem = taskItem.querySelector(".edit-item");
+    // Оновлюємо текст задачі на сторінці
+    // taskItem.textContent = `[${taskIndex}] ${newTaskText.trim()}`;
+    taskItem.firstChild.textContent = newTaskText.trim();
+    // Додаємо елементи видалення та редагування назад до задачі
+    updateTaskInLocalStorage(taskIndex, newTaskText.trim());
 
-    taskItem.textContent = newTaskText.trim();
-
+    // Додаємо елементи видалення та редагування назад до задачі
     taskItem.appendChild(deleteItem);
     taskItem.appendChild(editItem);
-
-    updateTaskInLocalStorage(taskIndex, newTaskText.trim());
   }
 }
 
 // update задачу в localStorage
 function updateTaskInLocalStorage(taskIndex, newTaskText) {
   const tasks = getTasksFromLocalStorage();
-  tasks[taskIndex] = newTaskText;
+  tasks[taskIndex].task = newTaskText.trim();
   setTasksToLocalStorage(tasks);
+  renderTasks();
 }
 
 /**
@@ -163,9 +169,9 @@ function createTask(event) {
   if (taskInput.value.trim() === "") {
     return;
   }
-
+  const tasks = getTasksFromLocalStorage();
   // Створюємо нову задачу і додаємо в DOM
-  createSingleTaskElement(taskInput.value);
+  createSingleTaskElement(taskInput.value, tasks.length);
   // Додаємо нову задачу в localStorage
   storeTaskInLocalStorage(taskInput.value);
 
@@ -182,7 +188,10 @@ function storeTaskInLocalStorage(task) {
   const tasks = getTasksFromLocalStorage();
 
   // Додаємо нову задачу в масив
-  tasks.push(task);
+  tasks.push({
+    id: Date.now(),
+    task,
+  });
   // Записуємо оновлений масив в localStorage
   setTasksToLocalStorage(tasks);
 }
